@@ -1,5 +1,5 @@
 {
-  "name": "express",
+  "name": "myexpress",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pavane90/ExpressExample/issues"
   },
-  "homepage": "https://github.com/pavane90/ExpressExample#readme"
+  "homepage": "https://github.com/pavane90/ExpressExample#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

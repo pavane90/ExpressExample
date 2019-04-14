@@ -22,7 +22,11 @@ app.use(function(req, res, next){
     var person = {name:'mike', age:'28'};
     //res.send(person);
     var personStr = JSON.stringify(person); //객체를 JSON문자열로 보낼 수 있다. 더욱 안전
-    res.send(personStr);
+    //res.send(personStr);
+
+    res.writeHead(200, {"Content-Type":"application/json;charset=utf8"});
+    res.write(personStr);
+    res.end();
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){

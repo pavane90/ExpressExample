@@ -20,7 +20,9 @@ app.use(function(req, res, next){
     //res.end('<h1>서버에서 응답한 결과입니다. : ' + req.user + '</h1>');
     //res.send('<h1>서버에서 응답한 결과입니다. : ' + req.user + '</h1>');
     var person = {name:'mike', age:'28'};
-    res.send(person);
+    //res.send(person);
+    var personStr = JSON.stringify(person); //객체를 JSON문자열로 보낼 수 있다. 더욱 안전
+    res.send(personStr);
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){

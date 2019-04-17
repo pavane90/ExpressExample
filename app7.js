@@ -3,11 +3,17 @@ var http = require('http'); // httpオブジェクト生成
 var static = require('serve-static');
 var path = require('path');
 
+var bodyParser = require('body-parser');
+
 var app = express(); // express server object
 
 app.set('port', process.env.PORT || 3000); // configure server port
 app.use(static(path.join(__dirname, 'public'))); //폴더의 패스를 static으로 불러올 수 있다.
 //localhost:3000/cordova_bot.png
+
+//post 데이터를 다룰때는 bodyParser로 처리가능
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 //app.use('/public', static(path.join(__dirname, 'public'))); 처럼 public폴더도 경로에 포함시킬 수 있다.
 
@@ -15,7 +21,9 @@ app.use(function(req, res, next){
     console.log('첫번째 미들웨어 호출됨.');
 
     var userAgent = req.header('User-Agent');
-    var paramName = req.query.name; // 파라미터에 있는 name값을 읽을 수 있다.
+    //var paramName = req.query.name; // 파라미터에 있는 name값을 읽을 수 있다.
+    var paramName = req.body.name; //post화 get동시처리 가능
+    console.log(req.body.name);
 
     res.send('<h3>서버에서 응답. User-Agent -> ' + userAgent + '</h3><h3>Param Name -> ' + paramName + '</h3>');
     // http://localhost:3000/?name=mike

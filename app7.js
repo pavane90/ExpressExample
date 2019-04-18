@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var app = express(); // express server object
 
 app.set('port', process.env.PORT || 3000); // configure server port
-app.use(static(path.join(__dirname, 'public'))); //폴더의 패스를 static으로 불러올 수 있다.
+app.use('/public',static(path.join(__dirname, 'public'))); //폴더의 패스를 static으로 불러올 수 있다.
 //localhost:3000/cordova_bot.png
 
 //post 데이터를 다룰때는 bodyParser로 처리가능
@@ -22,7 +22,7 @@ app.use(function(req, res, next){
 
     var userAgent = req.header('User-Agent');
     //var paramName = req.query.name; // 파라미터에 있는 name값을 읽을 수 있다.
-    var paramName = req.body.name; //post화 get동시처리 가능
+    var paramName = req.body.id || req.query.id; //post화 get동시처리 가능
     console.log(req.body.name);
 
     res.send('<h3>서버에서 응답. User-Agent -> ' + userAgent + '</h3><h3>Param Name -> ' + paramName + '</h3>');

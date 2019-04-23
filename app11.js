@@ -4,6 +4,7 @@ var static = require('serve-static');
 var path = require('path');
 
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 var app = express(); // express server object
 
@@ -15,7 +16,27 @@ app.use('/public',static(path.join(__dirname, 'public'))); //폴더의 패스를
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+app.use(cookieParser()); // 쿠키 컨트롤
+
 var router = express.Router();
+router.route('/process/setUserCookie').get(function(req, res){
+    console.log('/process/setUserCookie 라우팅 함수 호출됨');
+
+    res.cookie('user', {
+        id:'mike',
+        name:'girlsgeneration',
+        authorized:true
+    });
+
+    res.redirect('/process/showCookie');
+});
+
+router.route('/process/showCookie').get(function(req, res){
+    console.log('/process/showCookie 라우팅 함수 호출됨');
+    
+    res.send(req.cookies);
+});
+
 
 router.route('/process/login').post(function(req, res){
     console.log('/process/login 라우팅 함수에서 받음');

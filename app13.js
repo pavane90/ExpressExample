@@ -36,7 +36,7 @@ app.use(cors());
 //파일 업로드 설정
 var storage = multer.diskStorage({
   destination: function(req, file, callback) {
-    callback(null, "uploads"); //저장될 폴더를 지정
+    callback(null, "uploads"); //저장될 폴더를 지정 (없으면 만들어야하나?..)
   },
   filename: function(req, file, callback) {
     //callback(null, file.originalname + Date.now());

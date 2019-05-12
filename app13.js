@@ -43,7 +43,7 @@ var storage = multer.diskStorage({
 
     //확장자를 빼내는 방법
     var extension = path.extname(file.originalname); //확장자를 리턴할 수 있음
-    path.basename(file.originalname, extension); //이름만 리턴할 수 있음
+    var basename = path.basename(file.originalname, extension); //이름만 리턴할 수 있음
     callback(null, basename + Date.now() + extension); //파일명, 업로드시간, 확장자
   }
 });
@@ -57,6 +57,38 @@ var upload = multer({
 });
 
 var router = express.Router();
+
+router
+  .route("/process/photo")
+  .post(upload.array("photo", 1), function(req, res) {
+    console.log("/process/photo 라우팅 호출");
+    var files = req.files;
+    console.log("files : ");
+    if (files.length > 0) {
+      console.dir(files[0]);
+    } else {
+      console.log("파일이 없습니다.");
+    }
+    var originalname;
+    var filename;
+    var mimetype;
+    var size;
+
+    if (Array.isArray(files)) {
+      for (var i = 0; i < files.length; i++) {
+        originalname = files[i].originalname;
+        filename = files[i].filename;
+        mimetype = files[i].mimetype;
+        size = files[i].size;
+      }
+    }
+
+    res.writeHead(200, { "Content-Type": "text/html;charset=utf8" });
+    res.write("<h1>파일 업로드 성공!</h1");
+    res.write("<p>원본파일 : " + originalname + "</p>");
+    res.write("<p>저장파일 : " + filename + "</p>");
+    res.end();
+  });
 
 router.route("/process/product").get(function(req, res) {
   console.log("process/product 라우팅 호출");
